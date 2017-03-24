@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    tools:context=".activity.LoginActivity"
+    android:background="@drawable/background">
+<!--
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:background="#000000"
+        android:alpha="0.5"
+        android:layout_alignParentTop="true">
+    </View>
+-->
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/imageView"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/visitor"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:id="@+id/editText"
+        android:drawableLeft="@drawable/id"
+        android:hint="  输入账号"
+        android:textColorHint="#999999"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:hint=" 输入密码"
+        android:drawableLeft="@drawable/pass"
+        android:textSize="20sp"
+        android:textColorHint="#999999"
+        android:textColor="#FFFFFF"
+        android:id="@+id/editText2"
+        android:layout_below="@+id/editText"
+        android:layout_alignLeft="@+id/editText"
+        android:layout_alignStart="@+id/editText"
+        android:layout_alignRight="@+id/editText"
+        android:layout_alignEnd="@+id/editText" />
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/green_btn_drawable"
+        android:textColor="@android:color/white"
+        android:text="登录"
+        android:textSize="20sp"
+        android:id="@+id/login_bt"
+        android:layout_below="@+id/editText2"
+        android:layout_marginTop="6dp"
+        android:layout_alignLeft="@+id/editText2"
+        android:layout_alignStart="@+id/editText2"
+        android:layout_alignRight="@+id/editText2"
+        android:layout_alignEnd="@+id/editText2" />
+
+    <Button
+        android:id="@+id/register"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:textColor="@android:color/white"
+        android:text="新用户注册"
+        android:textSize="16sp"
+        android:layout_below="@+id/login_bt"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="210dp"/>
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:textColor="@android:color/white"
+        android:text="忘记密码"
+        android:textSize="16sp"
+        android:layout_below="@+id/login_bt"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="210dp"/>
+
+    <Button
+        android:id="@+id/visitor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="游客登录->"
+        android:textSize="17sp"
+        android:textColor="#fff"
+        android:background="@null"
+        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/editText" />
+</RelativeLayout>

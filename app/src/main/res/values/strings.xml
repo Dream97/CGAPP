@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CGAPP</string>
+    <string name="navigation_drawer_open">打开drawer</string>
+    <string name="navigation_drawer_close">关闭drawer</string>
 </resources>
