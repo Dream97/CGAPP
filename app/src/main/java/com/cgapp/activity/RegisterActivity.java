@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.cgapp.R;
 
@@ -12,7 +14,16 @@ import com.cgapp.R;
  */
 
 public class RegisterActivity extends AppCompatActivity {
+
     private Toolbar toolbar;
+    private EditText registerName;
+    private EditText registerId;
+    private EditText registerPassword;
+    private EditText registerPassword2;
+    private EditText registerVc;
+    private Button registerVcBt;
+    private Button registerBt;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -28,8 +39,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayShowTitleEnabled(false);//隐藏toolbar上的title
-        //actionBar.setHomeAsUpIndicator(R.drawable.back);
-       // actionBar.setTitle("注册");
 
 
     }
