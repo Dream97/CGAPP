@@ -1,9 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/item1"
-        android:title="item1"
-        android:icon="@drawable/user">
+    <item android:title="资料" >
+        <group>
+            <item android:id="@+id/menu_data"
+                android:title="个人信息"
+                android:icon="@drawable/user">
+            </item>
+            <item
+                android:id="@+id/menu_favorite"
+                android:title="我的收藏"
+                android:icon="@drawable/favorite"
+                >
+            </item>
+        </group>
+        <group>
+            <item android:id="@+id/menu_comunite"
+                android:title="联系我们"
+                android:icon="@drawable/call">
+            </item>
+            <item
+                android:id="@+id/menu_join"
+                android:title="加入我们"
+                android:icon="@drawable/join"
+                >
+            </item>
+        </group>
+    </item>
+    <item android:title="系统设置">
+        <menu>
+            <item android:id="@+id/menu_dark"
+                android:title="黑夜模式"
+                android:icon="@drawable/theme_light_dark">
+            </item>
+            <item
+                android:id="@+id/menu_refresh"
+                android:title="版本更新"
+                android:icon="@drawable/refresh">
+            </item>
+        </menu>
     </item>
 
 
