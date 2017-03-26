@@ -3,28 +3,52 @@ package com.cgapp.activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.cgapp.R;
+import com.cgapp.adapter.FragmentViewPaferAdapter;
 
 /**
  * Created by asus on 2017/3/24.
  */
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,TabLayout.OnTabSelectedListener{
+
+    //绿色icon
+    private int[] tabimages_green =new int[]{
+            R.drawable.tab_home_green,
+            R.drawable.tab_push_green,
+            R.drawable.tab_repair_green
+    };
+    private int[] tabimages =new int[]{
+            R.drawable.tab_home_black,
+            R.drawable.tab_push_black,
+            R.drawable.tab_repair_black
+    };
+    private String[] titles ={"主页","推送","报修"};
+
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar ;
     private ActionBarDrawerToggle toggle;
 
-    private ImageView imageView;
+    //设置tabLayout
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private FragmentViewPaferAdapter fragmentViewPaferAdapter;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -37,8 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     /**
      *初始化组件
      */
-    private void initView()
-    {
+    private void initView() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 
@@ -58,14 +81,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //设置头像
-        imageView = (ImageView) findViewById(R.id.user_image);
-        //imageView.setLayoutParams();
-        //imageView.setImageResource(R.drawable.myimage);//这里在java代码中设置头像会崩掉
-        //imageView.setLayoutParams();
-        //imageView.setScaleType();
-        //imageView.setBackground(R.drawable.myimage);
+        /**
+         * tablayout
+         */
+        tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        fragmentViewPaferAdapter = new FragmentViewPaferAdapter(getSupportFragmentManager(), this);
 
+        viewPager.setAdapter(fragmentViewPaferAdapter);
+        tabLayout.setupWithViewPager(viewPager);//按理解，只要绑定了就会知道多少个tab
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        tabLayout.addOnTabSelectedListener(this);//监听，实时更换颜色
+        //为tab设置图标
+        setCustemTablayout(tabLayout);
+        TabLayout.Tab tab = tabLayout.getTabAt(0);
+        View v = tab.getCustomView();
+        ImageView image = (ImageView) v.findViewById(R.id.imageView);
+        image.setImageResource(tabimages_green[0]);
+    }
+
+    /**
+     * 设置tab图标
+     * @param tabLayout
+     */
+
+    private void setCustemTablayout(TabLayout tabLayout) {
+        for (int i = 0;i<tabLayout.getTabCount();i++)
+        {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+                    if(tab!=null)
+                    {
+                        tab.setCustomView(fragmentViewPaferAdapter.getTabView(i));
+                    }
+        }
     }
 
 
@@ -92,7 +140,51 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this,item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
         }
-
+        drawerLayout.closeDrawer(GravityCompat.START);//关闭侧滑栏
         return false;
+    }
+
+    /**
+     * 监听改变图标颜色
+     * @param tab
+     */
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+
+        for(int i=0;i<tabLayout.getTabCount();i++)
+        {
+
+            if(i==tab.getPosition())
+            {
+                //v = null;
+                //View v = LayoutInflater.from(this).inflate(R.layout.tab_layout_view,null);
+                //TextView tv = (TextView) v.findViewById(R.id.textView);
+                //tv.setText(titles[i]);
+                View v = tab.getCustomView();
+                ImageView image = (ImageView) v.findViewById(R.id.imageView);
+                image.setImageResource(tabimages_green[i]);
+                //tab.setCustomView(v);
+            }
+            else
+            {
+               TabLayout.Tab tab2= tabLayout.getTabAt(i);
+                //v = fragmentViewPaferAdapter.getTabView(i);
+                //tab.setCustomView(v);
+                View v = tab2.getCustomView();
+                ImageView image = (ImageView) v.findViewById(R.id.imageView);
+                image.setImageResource(tabimages[i]);
+            }
+        }
+
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 }

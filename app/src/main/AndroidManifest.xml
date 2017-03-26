@@ -26,7 +26,7 @@
         </activity>
 
         <activity android:name=".activity.MainActivity"
-            android:label="主界面">
+            android:label="Computer Genius">
         </activity>
 
         <activity android:name=".activity.ModifyPasswordActivity">
