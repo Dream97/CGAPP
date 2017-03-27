@@ -18,15 +18,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/header_username"
+        <Button
+            android:id="@+id/nav_login_bt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="登录/注册"
             android:textSize="20sp"
             android:textColor="#fff"
+            android:background="@null"
+            />
+        <TextView
+            android:id="@+id/nav_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dream97"
+            android:textSize="20sp"
+            android:textColor="#fff"
+            android:background="@null"
             />
         <TextView
             android:id="@+id/header_id"

@@ -1,5 +1,6 @@
 package com.cgapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -12,7 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgapp.R;
@@ -22,8 +25,18 @@ import com.cgapp.adapter.FragmentViewPaferAdapter;
  * Created by asus on 2017/3/24.
  */
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,TabLayout.OnTabSelectedListener{
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,TabLayout.OnTabSelectedListener, View.OnClickListener {
 
+
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private Toolbar toolbar ;
+    private ActionBarDrawerToggle toggle;
+
+    //设置tabLayout
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private FragmentViewPaferAdapter fragmentViewPaferAdapter;
     //绿色icon
     private int[] tabimages_green =new int[]{
             R.drawable.tab_home_green,
@@ -37,16 +50,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     };
     private String[] titles ={"主页","推送","报修"};
 
-
-    private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
-    private Toolbar toolbar ;
-    private ActionBarDrawerToggle toggle;
-
-    //设置tabLayout
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private FragmentViewPaferAdapter fragmentViewPaferAdapter;
+    //侧滑栏组件
+    private View view ;
+    private Button navLoginBt;//侧滑栏登录按钮
+    private TextView navUsername;
 
 
 
@@ -63,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
     private void initView() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
 
         //注册toobar
         toolbar = (Toolbar) findViewById(R.id.main_toolBar);
@@ -98,6 +104,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View v = tab.getCustomView();
         ImageView image = (ImageView) v.findViewById(R.id.imageView);
         image.setImageResource(tabimages_green[0]);
+
+        /**
+         * 侧滑栏组件设置点击事件
+         * 实现该功能需要在xml中取消headerLayout="@layout/nav_header
+         */
+        view = navigationView.inflateHeaderView(R.layout.nav_header);
+        navLoginBt = (Button) view.findViewById(R.id.nav_login_bt);
+        navUsername = (TextView) view.findViewById(R.id.nav_username);
+        navUsername.setVisibility(View.GONE);
+        //navLoginBt.setOnClickListener(this);
+        //navLoginBt.setTextColor(Color.RED);
+        navLoginBt.setOnClickListener(this);
     }
 
     /**
@@ -186,5 +204,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onTabReselected(TabLayout.Tab tab) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.nav_login_bt:
+                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(intent);
+                navLoginBt.setVisibility(View.GONE);
+                navUsername.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 }
