@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.cgapp.R;
 
@@ -14,6 +16,7 @@ import com.cgapp.R;
  */
 
 public class HomeFramgent extends Fragment {
+    private WebView webView ;
     public static HomeFramgent getInstance()
     {
         return new HomeFramgent();
@@ -23,6 +26,15 @@ public class HomeFramgent extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_home,container,false);
+        webView = (WebView) view.findViewById(R.id.home_webview);
+        webView.loadUrl("http://geek.csdn.net/");
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
         return view;
     }
 }

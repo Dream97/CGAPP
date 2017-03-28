@@ -40,7 +40,7 @@
             android:icon="@drawable/call">
             </item>
             <item
-            android:id="@+id/menu_join"
+            android:id="@+id/menu_about"
             android:title="关于我们"
             android:icon="@drawable/join"
             >

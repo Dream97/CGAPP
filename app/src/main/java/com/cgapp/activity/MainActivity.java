@@ -73,7 +73,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //注册toobar
         toolbar = (Toolbar) findViewById(R.id.main_toolBar);
+
+        //toolbar.setLogo(R.drawable.jiwei_text_logo);
+        //toolbar.setLogo(R.drawable.tab_home_black);
+        //toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
         //使用toggle监听drawerlayout
         toggle = new ActionBarDrawerToggle(
                 this,
@@ -86,7 +91,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();        //注册navigation并设置监听
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);//去掉标题
+        //放在后面，取代响应侧滑的按钮
+        //toolbar.setNavigationIcon(R.drawable.tab_home_black);
         /**
          * tablayout
          */
@@ -142,16 +149,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(item.getItemId())
         {
             case R.id.menu_data:
-                Toast.makeText(this,item.getTitle(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this,UserDataActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.menu_history:
+                Intent intent1 = new Intent(MainActivity.this,RepairHistoryActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.menu_favorite:
-                Toast.makeText(this,item.getTitle(),Toast.LENGTH_SHORT).show();
+                Intent intent2 = new Intent(MainActivity.this,FavoriteActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.menu_comunite:
                 Toast.makeText(this,item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.menu_join:
-                Toast.makeText(this,item.getTitle(),Toast.LENGTH_SHORT).show();
+            case R.id.menu_about:
+                Intent intent3 = new Intent(MainActivity.this,RepairHistoryActivity.class);
+                startActivity(intent3);
                 break;
             case R.id.menu_dark:
                 Toast.makeText(this,item.getTitle(),Toast.LENGTH_SHORT).show();

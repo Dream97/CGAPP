@@ -25,14 +25,25 @@
             android:label="注册">
         </activity>
 
-        <activity android:name=".activity.MainActivity"
-            android:label="Computer Genius">
+        <activity android:name=".activity.MainActivity">
         </activity>
 
         <activity android:name=".activity.ModifyPasswordActivity">
         </activity>
 
+        <activity android:name=".activity.UserDataActivity">
+        </activity>
+
+        <activity android:name=".activity.RepairHistoryActivity">
+        </activity>
+
+        <activity android:name=".activity.FavoriteActivity">
+        </activity>
+
+        <activity android:name=".activity.AboutUsActivity">
+        </activity>
+
     </application>
 
-
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 </manifest>
