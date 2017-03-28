@@ -7,21 +7,14 @@
                 android:icon="@drawable/user">
             </item>
             <item
+                android:id="@+id/menu_history"
+                android:title="报修记录"
+                android:icon="@drawable/history">
+            </item>
+            <item
                 android:id="@+id/menu_favorite"
                 android:title="我的收藏"
                 android:icon="@drawable/favorite"
-                >
-            </item>
-        </group>
-        <group>
-            <item android:id="@+id/menu_comunite"
-                android:title="联系我们"
-                android:icon="@drawable/call">
-            </item>
-            <item
-                android:id="@+id/menu_join"
-                android:title="加入我们"
-                android:icon="@drawable/join"
                 >
             </item>
         </group>
@@ -39,6 +32,19 @@
             </item>
         </menu>
     </item>
-
-
+    <item
+        android:title="about">
+        <group>
+            <item android:id="@+id/menu_comunite"
+            android:title="联系我们"
+            android:icon="@drawable/call">
+            </item>
+            <item
+            android:id="@+id/menu_join"
+            android:title="关于我们"
+            android:icon="@drawable/join"
+            >
+            </item>
+        </group>
+    </item>
 </menu>

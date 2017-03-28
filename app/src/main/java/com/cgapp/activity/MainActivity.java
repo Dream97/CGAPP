@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private View view ;
     private Button navLoginBt;//侧滑栏登录按钮
     private TextView navUsername;
-
+    private TextView navId;
 
 
     @Override
@@ -112,7 +112,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         view = navigationView.inflateHeaderView(R.layout.nav_header);
         navLoginBt = (Button) view.findViewById(R.id.nav_login_bt);
         navUsername = (TextView) view.findViewById(R.id.nav_username);
+        navId = (TextView) view.findViewById(R.id.header_id);
         navUsername.setVisibility(View.GONE);
+        navId.setVisibility(View.GONE);
         //navLoginBt.setOnClickListener(this);
         //navLoginBt.setTextColor(Color.RED);
         navLoginBt.setOnClickListener(this);
@@ -215,6 +217,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 navLoginBt.setVisibility(View.GONE);
                 navUsername.setVisibility(View.VISIBLE);
+                navId.setVisibility(View.VISIBLE);
                 break;
         }
     }
