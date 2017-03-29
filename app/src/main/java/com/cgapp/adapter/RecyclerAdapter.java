@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgapp.R;
@@ -16,14 +17,14 @@ import java.util.List;
  */
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
-    private List<String> items;
-    //private final SendFragment context;
+    private List<String> titles;
+    private final SendFragment context;
     //private final LayoutInflater inflater;
 
-    public RecyclerAdapter(SendFragment context, List<String> items)
+    public RecyclerAdapter(SendFragment context, List<String> titles,List<String> images)
     {
-        //this.context = context;
-        this.items = items;
+        this.context = context;
+        this.titles = titles;
     }
 
     /**
@@ -41,15 +42,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, int position) {
-        holder.textView.setText(items.get(position));
+        holder.textView.setText(titles.get(position));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView textView;
+        public ImageView imageView;
         public ViewHolder(View itemView)
         {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.card_text);
+            imageView = (ImageView) itemView.findViewById(R.id.card_image);
         }
     }
 
@@ -57,6 +60,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return titles.size();
     }
 }

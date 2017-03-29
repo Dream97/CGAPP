@@ -1,17 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardBackgroundColor="#669900"
-    app:cardElevation="20dp"
-    app:cardCornerRadius="10dp"
+    android:layout_height="96dp"
+    app:cardBackgroundColor="#EBEBEB"
+    app:cardElevation="3dp"
+    app:cardCornerRadius="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
     <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:id="@+id/card_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="嘿，抬头"/>
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_vertical"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textSize="18sp"
+        android:text="伟大的毛主席说，“向雷锋同志学习！”。纵使时光荏苒，雷锋精神在时间的打磨下亦日益生辉，并一代代的传承下去。
+3/25 芷园，我们不见不散"/>
 
+        <ImageView
+            android:id="@+id/card_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/logo"
+            android:layout_gravity="center_vertical"/>
+    </LinearLayout>
 </android.support.v7.widget.CardView>
