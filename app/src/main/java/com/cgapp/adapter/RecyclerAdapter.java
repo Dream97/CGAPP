@@ -18,6 +18,7 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private List<String> titles;
+    private List<String> images;
     private final SendFragment context;
     //private final LayoutInflater inflater;
 
@@ -25,6 +26,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     {
         this.context = context;
         this.titles = titles;
+        this.images = images;
     }
 
     /**
@@ -40,9 +42,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return new ViewHolder(view);
     }
 
+    /**
+     * 很明显是操作
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, int position) {
         holder.textView.setText(titles.get(position));
+        //holder.imageView.setImageResource(images.get(position));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

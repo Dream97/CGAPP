@@ -2,41 +2,52 @@ package com.cgapp.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.cgapp.R;
-import com.cgapp.Util.GetHttpUtil;
-import com.cgapp.Util.HttpCallbackListener;
 
 /**
  * Created by asus on 2017/3/28.
  */
 
 public class UserDataActivity extends Activity {
+    private String TAG ="hei";
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userdata);
         Button button = (Button) findViewById(R.id.user_test);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "http://apis.guokr.com/handpick/article.json?retrieve_type=by_since&category=all&limit=25&ad=1";
-                GetHttpUtil.getHttpRequest(url, new HttpCallbackListener() {
-                    @Override
-                    public void onFinish(String response) {
-                        Log.d("TAG",response);
-                    }
-
-                    @Override
-                    public void onError(Exception error) {
-                        Log.e("TAG",error.getMessage()+"哈", error);
-                    }
-                });
+//                String url = Api.url+"auth/getVerificationCode";
+//                String key = "phone";
+//                String value = "13416144624";
+//                Map<String,String> map =  new HashMap<String, String>();
+//                map.put(key,value);
+//                OkHttpUtil.post(url, new okhttp3.Callback() {
+//                    @Override
+//                    public void onFailure(Call call, IOException e) {
+//                        Log.e(TAG, "onFailure: ",e);
+//                    }
+//
+//                    @Override
+//                    public void onResponse(Call call, Response response) throws IOException {
+//                        String responseData = response.body().string();
+//                        try {
+//                            String hei = JsonUtil.getJsonDate(responseData);
+//                            //Toast.makeText(UserDataActivity.this,hei,Toast.LENGTH_SHORT).show();
+//                            Log.d(TAG, "onSuccess: "+hei);
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                },map);
             }
         });
     }
+
 }

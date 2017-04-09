@@ -48,6 +48,7 @@
         />
     <EditText
         android:id="@+id/register_pass"
+        android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/pass"
@@ -59,6 +60,7 @@
         />
     <EditText
         android:id="@+id/register_pass2"
+        android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/pass"
@@ -96,6 +98,7 @@
             android:textSize="17sp"/>
     </RelativeLayout>
     <Button
+        android:id="@+id/register_bt"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/register_vc_layout"

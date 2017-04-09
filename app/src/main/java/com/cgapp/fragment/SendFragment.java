@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.cgapp.R;
 import com.cgapp.adapter.RecyclerAdapter;
+import com.cgapp.bean.SendBean;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class SendFragment extends Fragment {
     private RecyclerAdapter recyclerAdapter;
     private SwipeRefreshLayout refreshLayout;
     List<String> listTitles;
+    List<SendBean> sendlist;
 
     public static SendFragment getInstance()
     {
@@ -43,6 +45,7 @@ public class SendFragment extends Fragment {
 
         initView();
 
+        //下拉刷新
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -75,38 +78,6 @@ public class SendFragment extends Fragment {
         {
             listTitles.add("伟大的毛主席说，“向雷锋同志学习！”。纵使时光荏苒，雷锋精神在时间的打磨下亦日益生辉，并一代代的传承下去。\n"+i);
         }
-
-
-//        try{
-//            final JSONArray[] jsonArray = new JSONArray[0];
-//        String address = Api.GUOKR_ARTICLES;
-//        GetHttpUtil.getHttpRequest(address, new HttpCallbackListener() {
-//            @Override
-//            public void onFinish(String response){
-//                try {
-//                    jsonArray[0] =new JSONArray(response);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//
-//            @Override
-//            public void onError(Exception e) {
-//
-//            }
-//        });
-//            //JSONArray jsonArray1 = jsonArray[0];
-//            for(int i = 0;i<jsonArray[0].length();i++)
-//            {
-//                JSONObject jsonObject = jsonArray[0].getJSONObject(i);
-//                listTitles.add(jsonObject.getString("title"));
-//            }
-//
-//        }catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-
         return listTitles;
     }
     private  List<String> listImages()
