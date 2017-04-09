@@ -2,21 +2,19 @@ package com.cgapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.cgapp.R;
 import com.cgapp.Util.Api;
+import com.cgapp.Util.CommonVari;
 import com.cgapp.Util.JsonUtil;
 import com.cgapp.Util.OkHttpUtil;
+import com.cgapp.Util.ToastUtil;
 
 import org.json.JSONException;
 
@@ -43,10 +41,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText registerVc;
     private Button registerVcBt;
     private Button registerBt;
-    private Handler handler;
-    private  int IDNULL = 404;
-    private  int DIF = 405;
-
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -81,25 +75,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
          */
         registerVcBt.setOnClickListener(this);
         registerBt.setOnClickListener(this);
-        handler = new Handler(){
-            public void handleMessage(Message msg){
-                switch (msg.what)
-                {
-                    case 0:
-                        Toast.makeText(RegisterActivity.this,"获取验证码失败",Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1:
-                        Toast.makeText(RegisterActivity.this,"获取验证码中",Toast.LENGTH_SHORT).show();
-                        break;
-                    case 404:
-                        Toast.makeText(RegisterActivity.this,"ID/手机不能为空",Toast.LENGTH_SHORT).show();
-                        break;
-                    case 405:
-                        Toast.makeText(RegisterActivity.this,"两次密码输入不相同",Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        };
     }
 
 
@@ -108,92 +83,107 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId())
         {
             case R.id.register_getvc_bt:
-                String url = Api.url+"auth/getVerificationCode";
-                String key = "phone";
-                String value = registerId.getText().toString().trim();
-                if (TextUtils.isEmpty(value))
-                {
-                    Message msg = new Message();
-                    msg.what = IDNULL;
-                    handler.sendMessage(msg);
-                }else{
-                    Map<String,String> map =  new HashMap<>();
-                    map.put(key,value);
-                    OkHttpUtil.post(url, new okhttp3.Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            Log.e(TAG, "onFailure: ",e);
-                        }
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            String responseData = response.body().string();
-                            try {
-                                int status = JsonUtil.getJsonDate(responseData);
-                                Message msg = new Message();
-                                msg.what = status;
-                                handler.sendMessage(msg);
-                            //Toast.makeText(RegisterActivity.this,hei,Toast.LENGTH_SHORT).show();
-                            //Log.d(TAG, "onSuccess: "+hei);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    },map);
-                }
+                getVC();
                 break;
             case R.id.register_bt:
-                String url1 = Api.url+"auth/register";
-                String name = registerName.getText().toString().trim();
-                String phone = registerId.getText().toString().trim();
-                String password = registerPassword.getText().toString().trim();
-                String password2 = registerPassword2.getText().toString().trim();
-                String code = registerVc.getText().toString().trim();
-                if (!password.equals(password2))
-                {
-                    Message msg = new Message();
-                    msg.what = DIF;
-                    handler.sendMessage(msg);
-                }else{
-                    Map<String,String> map =  new HashMap<>();
-                    map.put("phone",phone);
-                    map.put("name",name);
-                    map.put("password",password);
-                    map.put("code",code);
-                    OkHttpUtil.post(url1, new okhttp3.Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            Log.e(TAG, "onFailure: ",e);
-                        }
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            String responseData = response.body().string();
-                            try {
-                                int status = JsonUtil.getJsonDate(responseData);
-                                if(status==1)
-                                {
-                                    Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(RegisterActivity.this,"注册失败",Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                register();
 
-//                                Message msg = new Message();
-//                                msg.what = status;
-//                                handler.sendMessage(msg);
-                                //Toast.makeText(RegisterActivity.this,hei,Toast.LENGTH_SHORT).show();
-                                //Log.d(TAG, "onSuccess: "+hei);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    },map);
-                }
                 break;
+        }
+    }
+
+    /**
+     * 处理注册按钮事件
+     */
+    private void register() {
+        String url1 = Api.url+"auth/register";
+        String name = registerName.getText().toString().trim();
+        String phone = registerId.getText().toString().trim();
+        String password = registerPassword.getText().toString().trim();
+        String password2 = registerPassword2.getText().toString().trim();
+        String code = registerVc.getText().toString().trim();
+        if (password.length()<6)
+        {
+            new ToastUtil(RegisterActivity.this, CommonVari.LIT);
+        }else
+        if(!password.equals(password2))
+        {
+            new ToastUtil(RegisterActivity.this, CommonVari.DIF);
+        }else{
+            Map<String,String> map =  new HashMap<>();
+            map.put("phone",phone);
+            map.put("name",name);
+            map.put("password",password);
+            map.put("code",code);
+            OkHttpUtil.post(url1, new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.e(TAG, "onFailure: ",e);
+                }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String responseData = response.body().string();
+                    try {
+                        final int status = JsonUtil.getIntCode(responseData);
+                        if(status==1)
+                        {
+                            Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                new ToastUtil(RegisterActivity.this,status);
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            },map);
+        }
+    }
+
+    /**
+     * 处理验证码事件
+     */
+    private void getVC() {
+        String url = Api.url+"auth/getVerificationCode";
+        String key = "phone";
+        String value = registerId.getText().toString().trim();
+        if (value.length()!=11)
+        {
+            new ToastUtil(RegisterActivity.this, CommonVari.IDNULL);
+        }else{
+            Map<String,String> map =  new HashMap<>();
+            map.put(key,value);
+            OkHttpUtil.post(url, new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.e(TAG, "onFailure: ",e);
+                }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String responseData = response.body().string();
+                    try {
+                        final int status = JsonUtil.getIntCode(responseData);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (status==1)
+                                {
+                                    new ToastUtil(RegisterActivity.this,CommonVari.VCSUCCESS);
+                                }else {
+                                    new ToastUtil(RegisterActivity.this,status);
+                                }
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            },map);
         }
     }
 }

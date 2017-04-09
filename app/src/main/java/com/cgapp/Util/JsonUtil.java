@@ -8,10 +8,26 @@ import org.json.JSONObject;
  */
 
 public class JsonUtil {
-    public  static int getJsonDate(String response) throws JSONException {
+    public  static int getIntCode(String response) throws JSONException {
         JSONObject jsonObject = new JSONObject(response);
+        int status = jsonObject.getInt("status");
         if(jsonObject.has("errcode"))
-            return 0 ;
-        else return 1;
+        {
+            return jsonObject.getInt("errcode");
+        }
+        return status;
     }
+    public static String getToken(String response) throws JSONException {
+        JSONObject jsonObject = new JSONObject(response);
+        if (jsonObject.has("errcode"))
+        {
+            return null;
+        } else
+        {
+            JSONObject data = jsonObject.getJSONObject("data");
+            String token = data.getString("token");
+            return token;
+        }
+    }
+
 }

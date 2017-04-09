@@ -8,6 +8,20 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.cgapp.R;
+import com.cgapp.Util.Api;
+import com.cgapp.Util.CommonVari;
+import com.cgapp.Util.JsonUtil;
+import com.cgapp.Util.OkHttpUtil;
+import com.cgapp.Util.ToastUtil;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -17,16 +31,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button registerBt;
     private Button loginBt;
     private Button modifyBt;
+    //private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //ActionBar actionBar = getActionBar();
-        //actionBar.hide();
-        //getSupportActionBar().hide();//隐藏actionBar
         setContentView(R.layout.activity_login);
-
+        id = (EditText) findViewById(R.id.login_id);
+        password = (EditText) findViewById(R.id.login_password);
+        loginBt = (Button) findViewById(R.id.login_bt);
+        registerBt = (Button) findViewById(R.id.register);
+        modifyBt = (Button) findViewById(R.id.login_modify_bt);
+        visitorBt = (Button) findViewById(R.id.visitor);
         initView();
 
     }
@@ -34,16 +50,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void initView()
     {
         //注册登录按钮
-        loginBt = (Button) findViewById(R.id.login_bt);
         loginBt.setOnClickListener(this);
         //注册按钮监听
-        registerBt = (Button) findViewById(R.id.register);
         registerBt.setOnClickListener(this);
         //注册修改密码按钮
-        modifyBt = (Button) findViewById(R.id.login_modify_bt);
         modifyBt.setOnClickListener(this);
         //游客登录按钮
-        visitorBt = (Button) findViewById(R.id.visitor);
         visitorBt.setOnClickListener(this);
     }
 
@@ -55,9 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
                  break;
             case R.id.login_bt:
-                Intent intent1 = new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(intent1);
-                finish();
+                login();
                 break;
             case R.id.login_modify_bt:
                 Intent intent2 = new Intent(LoginActivity.this,ModifyPasswordActivity.class);
@@ -68,6 +78,55 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent3);
                 finish();
                 break;
+        }
+    }
+
+    /**
+     * 处理登录事件
+     */
+    private void login() {
+        String url = Api.url+"auth/login";
+        Map<String,String> map = new HashMap<>();
+        if(id.getText().toString().length()!=11)
+        {
+            new ToastUtil(LoginActivity.this, CommonVari.IDNULL);
+        }else if(password.getText().toString().length()<6){
+            new ToastUtil(LoginActivity.this,CommonVari.LIT);
+        }
+        else{
+            map.put("phone",id.getText().toString());
+            map.put("password",password.getText().toString());
+
+            OkHttpUtil.post(url, new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    String responseBody = response.body().string();
+                    try {
+                        final String token = JsonUtil.getToken(responseBody);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(token!=null)
+                                {
+                                    CommonVari.token = token;
+                                    Intent intent1 = new Intent(LoginActivity.this,MainActivity.class);
+                                    startActivity(intent1);
+                                    CommonVari.FAG = 1;
+                                    finish();
+                                }else{
+                                    new ToastUtil(LoginActivity.this,0);
+                                }
+                            }
+                        });
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            },map);
         }
     }
 }

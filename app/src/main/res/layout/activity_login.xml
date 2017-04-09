@@ -24,7 +24,7 @@
         android:textColor="#fff"
         android:background="@null"
         android:layout_alignParentTop="true"
-        android:layout_alignEnd="@+id/editText" />
+        android:layout_alignEnd="@+id/login_id" />
     <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:id="@+id/editText"
+        android:id="@+id/login_id"
         android:drawableLeft="@drawable/id"
         android:hint="  输入账号"
         android:textColorHint="#999999"
@@ -51,6 +51,7 @@
         android:layout_marginTop="20dp" />
 
     <EditText
+        android:id="@+id/login_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
@@ -60,12 +61,11 @@
         android:textSize="20sp"
         android:textColorHint="#999999"
         android:textColor="#FFFFFF"
-        android:id="@+id/editText2"
-        android:layout_below="@+id/editText"
-        android:layout_alignLeft="@+id/editText"
-        android:layout_alignStart="@+id/editText"
-        android:layout_alignRight="@+id/editText"
-        android:layout_alignEnd="@+id/editText" />
+        android:layout_below="@+id/login_id"
+        android:layout_alignLeft="@+id/login_id"
+        android:layout_alignStart="@+id/login_id"
+        android:layout_alignRight="@+id/login_id"
+        android:layout_alignEnd="@+id/login_id" />
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -74,12 +74,12 @@
         android:text="登录"
         android:textSize="20sp"
         android:id="@+id/login_bt"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/login_password"
         android:layout_marginTop="6dp"
-        android:layout_alignLeft="@+id/editText2"
-        android:layout_alignStart="@+id/editText2"
-        android:layout_alignRight="@+id/editText2"
-        android:layout_alignEnd="@+id/editText2" />
+        android:layout_alignLeft="@+id/login_password"
+        android:layout_alignStart="@+id/login_password"
+        android:layout_alignRight="@+id/login_password"
+        android:layout_alignEnd="@+id/login_password" />
 
     <Button
         android:id="@+id/register"

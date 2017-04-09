@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cgapp.R;
+import com.cgapp.Util.CommonVari;
 import com.cgapp.adapter.FragmentViewPaferAdapter;
 
 /**
@@ -62,6 +63,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
         initView();
     }
 
@@ -69,8 +74,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      *初始化组件
      */
     private void initView() {
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
         //注册toobar
         toolbar = (Toolbar) findViewById(R.id.main_toolBar);
 
@@ -89,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         );
         drawerLayout.setDrawerListener(toggle);
         toggle.syncState();        //注册navigation并设置监听
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+
         navigationView.setNavigationItemSelectedListener(this);
         getSupportActionBar().setDisplayShowTitleEnabled(false);//去掉标题
         //放在后面，取代响应侧滑的按钮
@@ -97,8 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         /**
          * tablayout
          */
-        tabLayout = (TabLayout) findViewById(R.id.tablayout);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
+
         fragmentViewPaferAdapter = new FragmentViewPaferAdapter(getSupportFragmentManager(), this);
 
         viewPager.setAdapter(fragmentViewPaferAdapter);
@@ -120,11 +122,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navLoginBt = (Button) view.findViewById(R.id.nav_login_bt);
         navUsername = (TextView) view.findViewById(R.id.nav_username);
         navId = (TextView) view.findViewById(R.id.header_id);
-        navUsername.setVisibility(View.GONE);
-        navId.setVisibility(View.GONE);
-        //navLoginBt.setOnClickListener(this);
-        //navLoginBt.setTextColor(Color.RED);
-        navLoginBt.setOnClickListener(this);
+        if(CommonVari.FAG==0)
+        {
+            navUsername.setVisibility(View.GONE);
+            navId.setVisibility(View.GONE);
+            navLoginBt.setOnClickListener(this);
+        }else {
+            navLoginBt.setVisibility(View.GONE);
+        }
+
     }
 
     /**
@@ -229,9 +235,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_login_bt:
                 Intent intent = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(intent);
-                navLoginBt.setVisibility(View.GONE);
-                navUsername.setVisibility(View.VISIBLE);
-                navId.setVisibility(View.VISIBLE);
+                finish();
                 break;
         }
     }
