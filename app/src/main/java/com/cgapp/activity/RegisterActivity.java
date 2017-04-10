@@ -128,6 +128,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         if(status==1)
                         {
                             Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                            intent.putExtra(CommonVari.id,registerId.getText().toString());
+                            intent.putExtra(CommonVari.password,registerPassword.getText().toString());
                             startActivity(intent);
                             finish();
                         }

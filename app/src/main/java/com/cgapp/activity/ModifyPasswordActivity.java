@@ -93,7 +93,7 @@ public class ModifyPasswordActivity extends AppCompatActivity implements View.On
     private void modify() {
         String url1 = Api.url+"auth/updatePassword";
         String phone = id.getText().toString();
-        String password = pass.getText().toString();
+        final String password = pass.getText().toString();
         String password2 = pass2.getText().toString();
         String code = verification.getText().toString();
         if (password.length()<6)
@@ -124,6 +124,8 @@ public class ModifyPasswordActivity extends AppCompatActivity implements View.On
                                 if(status == 1)
                             {
                                 Intent intent = new Intent(ModifyPasswordActivity.this,LoginActivity.class);
+                                intent.putExtra(CommonVari.id,id.getText().toString());
+                                intent.putExtra(CommonVari.password,pass.getText().toString());
                                 startActivity(intent);
                                 finish();
                             }else{

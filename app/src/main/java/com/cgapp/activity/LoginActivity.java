@@ -3,6 +3,7 @@ package com.cgapp.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,7 @@ import com.cgapp.Util.Api;
 import com.cgapp.Util.CommonVari;
 import com.cgapp.Util.JsonUtil;
 import com.cgapp.Util.OkHttpUtil;
+import com.cgapp.Util.SharedPreferencesUtil;
 import com.cgapp.Util.ToastUtil;
 
 import org.json.JSONException;
@@ -25,6 +27,7 @@ import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
+    String TAG = "LoginActivity";
     private Button visitorBt;
     private EditText id;
     private EditText password;
@@ -49,6 +52,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void initView()
     {
+        if(CommonVari.LOGINFAG == 0)
+        {
+            //读取上一次登录的账号密码
+            id.setText(SharedPreferencesUtil.getData(this,"id"));
+            password.setText(SharedPreferencesUtil.getData(this,"password"));
+        }else{
+            Intent intent = getIntent();
+            id.setText(intent.getStringExtra(CommonVari.id));
+            password.setText(intent.getStringExtra(CommonVari.password));
+        }
         //注册登录按钮
         loginBt.setOnClickListener(this);
         //注册按钮监听
@@ -57,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         modifyBt.setOnClickListener(this);
         //游客登录按钮
         visitorBt.setOnClickListener(this);
+
     }
 
     @Override
@@ -100,6 +114,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             OkHttpUtil.post(url, new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
+                    Log.e(TAG, "onFailure: ",e);
                 }
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
@@ -114,6 +129,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     CommonVari.token = token;
                                     Intent intent1 = new Intent(LoginActivity.this,MainActivity.class);
                                     startActivity(intent1);
+                                    SharedPreferencesUtil.pustData(LoginActivity.this,id.getText().toString(),password.getText().toString());
                                     CommonVari.FAG = 1;
                                     finish();
                                 }else{
