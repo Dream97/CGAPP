@@ -74,7 +74,7 @@ public class SendFragment extends Fragment {
     private List<String> listTitles()
     {
         listTitles = new ArrayList<>();
-        for (int i = 0;i<50;i++)
+        for (int i = 0;i<20;i++)
         {
             listTitles.add("伟大的毛主席说，“向雷锋同志学习！”。纵使时光荏苒，雷锋精神在时间的打磨下亦日益生辉，并一代代的传承下去。\n"+i);
         }

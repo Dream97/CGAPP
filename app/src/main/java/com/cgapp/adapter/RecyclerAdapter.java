@@ -1,5 +1,8 @@
 package com.cgapp.adapter;
 
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cgapp.R;
+import com.cgapp.Util.CompressUtil;
 import com.cgapp.fragment.SendFragment;
 
 import java.util.List;
@@ -50,8 +54,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public void onBindViewHolder(RecyclerAdapter.ViewHolder holder, int position) {
         holder.textView.setText(titles.get(position));
-        //holder.imageView.setImageResource(images.get(position));
+        Resources res = context.getResources();
+        Bitmap bitmap = BitmapFactory.decodeResource(res,R.drawable.logo);
+        holder.imageView.setImageBitmap(CompressUtil.getZoomImage(bitmap,80,80));
+        //holder.imageView.setImageResource(R.drawable.plus);
     }
+
+    /**
+     * 一个容器
+     */
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView textView;
