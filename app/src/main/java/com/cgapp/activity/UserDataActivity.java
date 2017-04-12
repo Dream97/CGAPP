@@ -20,7 +20,6 @@ public class UserDataActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userdata);
         Button button = (Button) findViewById(R.id.user_test);

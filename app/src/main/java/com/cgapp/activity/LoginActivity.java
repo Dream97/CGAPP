@@ -129,7 +129,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     CommonVari.token = token;
                                     Intent intent1 = new Intent(LoginActivity.this,MainActivity.class);
                                     startActivity(intent1);
-                                    SharedPreferencesUtil.pustData(LoginActivity.this,id.getText().toString(),password.getText().toString());
+                                    Log.d(TAG, "run: toekn令牌"+token);
+                                    SharedPreferencesUtil.pustData(LoginActivity.this,id.getText().toString(),password.getText().toString(),token);
                                     CommonVari.FAG = 1;
                                     finish();
                                 }else{

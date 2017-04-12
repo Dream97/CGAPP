@@ -19,11 +19,12 @@ public class SharedPreferencesUtil {
      * @param id
      * @param password
      */
-    public static void pustData(Context context,String id, String password)
+    public static void pustData(Context context,String id, String password,String token)
     {
         SharedPreferences.Editor editor = context.getSharedPreferences(LOGIN,MODE_PRIVATE).edit();
         editor.putString("id",id);
         editor.putString("password",password);
+        editor.putString("token",token);
         editor.apply();
     }
 

@@ -13,12 +13,29 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 
 import com.cgapp.R;
+import com.cgapp.Util.Api;
+import com.cgapp.Util.CommonVari;
+import com.cgapp.Util.JsonUtil;
+import com.cgapp.Util.OkHttpUtil;
+import com.cgapp.Util.SharedPreferencesUtil;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by D&LL on 2016/5/25.
  * 初始页面加载界面
  */
 public class ShowLogoActivity extends Activity {
+
+    //token验证api
+    private String url = Api.url+"auth/logout";
 
     private ImageView imageView;
     private AlphaAnimation alphaAnimation;
@@ -39,13 +56,51 @@ public class ShowLogoActivity extends Activity {
 
             }
 
+            /***
+             * 在动画结束前验证token令牌
+             * 1.token令牌正确的的话直接跳过登录
+             * 2.不正确的话需要登录
+             * @param animation
+             */
             @Override
             public void onAnimationEnd(Animation animation) {
+
+                CommonVari.token = SharedPreferencesUtil.getData(ShowLogoActivity.this,"token");
+                Map<String,String> map = new HashMap<String, String>();
+                map.put("token",CommonVari.token);
+                OkHttpUtil.post(url, new okhttp3.Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String responseBody = response.body().string();
+                        try {
+                            int status = JsonUtil.getIntCode(responseBody);
+                            //Log.d(TAG, "onResponse: 状态是"+status);
+                            if(status==1)
+                            {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent = new Intent(ShowLogoActivity.this,MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                });
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },map);
                 Intent intent = new Intent(ShowLogoActivity.this,LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
-
             @Override
             public void onAnimationRepeat(Animation animation) {
 
