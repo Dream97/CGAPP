@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -122,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navLoginBt = (Button) view.findViewById(R.id.nav_login_bt);
         navUsername = (TextView) view.findViewById(R.id.nav_username);
         navId = (TextView) view.findViewById(R.id.header_id);
+        //判断是否是游客登录
         if(CommonVari.FAG==0)
         {
             navUsername.setVisibility(View.GONE);
@@ -180,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(this,item.getTitle(),Toast.LENGTH_SHORT).show();
                 break;
         }
-        drawerLayout.closeDrawer(GravityCompat.START);//关闭侧滑栏
+        //drawerLayout.closeDrawer(GravityCompat.START);//关闭侧滑栏
         return false;
     }
 

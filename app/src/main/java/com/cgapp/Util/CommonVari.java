@@ -24,4 +24,6 @@ public class CommonVari {
     public static String id = "id";
     //密码
     public static String password = "password";
+    //判断是否从侧滑栏的activity返回的
+   // public static int nav_flag = 0;
 }

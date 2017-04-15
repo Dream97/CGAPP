@@ -1,77 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ScrollView
+
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true">
-        <LinearLayout
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/userdata_tool"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <ImageView
-                android:id="@+id/data_userimage"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/myimage"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="40dp"
-                android:scaleType="fitXY" />
-
+            android:layout_height="40dp"
+            android:background="@color/green_normal"
+            android:weightSum="1">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dream97"
-                android:layout_marginTop="20dp"
+                android:text="个人信息"
+                android:textColor="#fff"
                 android:textSize="17sp"
-                android:layout_gravity="center_horizontal"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="40dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="电话"
-                    android:textSize="17sp"/>
-                <EditText
-                    android:hint="手机号/短号"
-                    android:layout_marginLeft="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@drawable/edittextsharp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="地址"
-                    android:textSize="17sp"/>
-                <EditText
-                    android:hint="泰山区1栋101"
-                    android:layout_marginLeft="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:background="@drawable/edittextsharp"/>
-            </LinearLayout>
-            <Button
+                android:layout_gravity="center"
+                />
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp">
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/user_test"
-            android:text="按钮"/>
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="1">
+                <ImageView android:id="@+id/fragment_repair_person"
+                    android:layout_height="150dp"
+                    android:layout_width="150dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/repair_person"/>
+                <include
+                    layout="@layout/activity_userdata2">
+                </include>
+            </LinearLayout>
 
+        </ScrollView>
+    </RelativeLayout>
 
-    </ScrollView>
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
