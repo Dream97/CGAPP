@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.cgapp.R;
 import com.cgapp.Util.CommonVari;
-import com.cgapp.adapter.FragmentViewPaferAdapter;
+import com.cgapp.adapter.FragmentViewPagerAdapter;
 
 /**
  * Created by asus on 2017/3/24.
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //设置tabLayout
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private FragmentViewPaferAdapter fragmentViewPaferAdapter;
+    private FragmentViewPagerAdapter fragmentViewPaferAdapter;
     //绿色icon
     private int[] tabimages_green =new int[]{
             R.drawable.tab_home_green,
@@ -96,13 +96,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayShowTitleEnabled(false);//去掉标题
         //放在后面，取代响应侧滑的按钮
         //toolbar.setNavigationIcon(R.drawable.tab_home_black);
+
         /**
          * tablayout
          */
 
-        fragmentViewPaferAdapter = new FragmentViewPaferAdapter(getSupportFragmentManager(), this);
-
+        fragmentViewPaferAdapter = new FragmentViewPagerAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(fragmentViewPaferAdapter);
+
         tabLayout.setupWithViewPager(viewPager);//按理解，只要绑定了就会知道多少个tab
         tabLayout.setTabMode(TabLayout.MODE_FIXED);
         tabLayout.addOnTabSelectedListener(this);//监听，实时更换颜色

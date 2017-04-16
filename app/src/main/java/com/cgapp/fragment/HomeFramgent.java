@@ -17,9 +17,14 @@ import com.cgapp.R;
 
 public class HomeFramgent extends Fragment {
     private WebView webView ;
+    private static HomeFramgent homeFramgent;
     public static HomeFramgent getInstance()
     {
-        return new HomeFramgent();
+        if(homeFramgent == null)
+        {
+            homeFramgent = new HomeFramgent();
+        }
+        return homeFramgent;
     }
     @Nullable
     @Override
