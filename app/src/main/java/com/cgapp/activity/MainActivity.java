@@ -26,13 +26,10 @@ import com.cgapp.adapter.FragmentViewPagerAdapter;
  */
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,TabLayout.OnTabSelectedListener, View.OnClickListener {
-
-
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar ;
     private ActionBarDrawerToggle toggle;
-
     //设置tabLayout
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -43,13 +40,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             R.drawable.tab_push_green,
             R.drawable.tab_repair_green
     };
+    //灰色icon
     private int[] tabimages =new int[]{
             R.drawable.tab_home_black,
             R.drawable.tab_push_black,
             R.drawable.tab_repair_black
     };
     private String[] titles ={"主页","推送","报修"};
-
     //侧滑栏组件
     private View view ;
     private Button navLoginBt;//侧滑栏登录按钮
@@ -62,10 +59,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        tabLayout = (TabLayout) findViewById(R.id.tablayout);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
         initView();
     }
 
@@ -73,14 +66,67 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      *初始化组件
      */
     private void initView() {
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
         //注册toobar
         toolbar = (Toolbar) findViewById(R.id.main_toolBar);
+        setToolBarListenner();
 
-        //toolbar.setLogo(R.drawable.jiwei_text_logo);
-        //toolbar.setLogo(R.drawable.tab_home_black);
-        //toolbar.setTitle("");
+        //Tab与ViewPager设置
+        setTabWithViewPager();
+
+        //Navigation上的账号与注册登录按钮
+        setNavigationLoginButton();
+    }
+
+    /**
+     * 设置NavigationHeader上的登录按钮是否屏蔽
+     */
+    private void setNavigationLoginButton() {
+        /**
+     * 侧滑栏组件设置点击事件
+     * 实现该功能需要在xml中取消headerLayout="@layout/nav_header
+     */
+        view = navigationView.inflateHeaderView(R.layout.nav_header);
+        navLoginBt = (Button) view.findViewById(R.id.nav_login_bt);
+        navUsername = (TextView) view.findViewById(R.id.nav_username);
+        navId = (TextView) view.findViewById(R.id.header_id);
+        //判断是否是游客登录
+        if(CommonVari.FAG==0)
+        {
+            navUsername.setVisibility(View.GONE);
+            navId.setVisibility(View.GONE);
+            navLoginBt.setOnClickListener(this);
+        }else {
+            navLoginBt.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * Tab与ViewPager设置
+     */
+    private void setTabWithViewPager() {
+        fragmentViewPaferAdapter = new FragmentViewPagerAdapter(getSupportFragmentManager(), this);
+        viewPager.setAdapter(fragmentViewPaferAdapter);
+
+        tabLayout.setupWithViewPager(viewPager);//按理解，只要绑定了就会知道多少个tab
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);
+        tabLayout.addOnTabSelectedListener(this);//监听，实时更换颜色
+        //为tab设置图标
+        setCustemTablayout(tabLayout);
+        TabLayout.Tab tab = tabLayout.getTabAt(0);
+        View v = tab.getCustomView();
+        ImageView image = (ImageView) v.findViewById(R.id.imageView);
+        image.setImageResource(tabimages_green[0]);
+    }
+
+    /**
+     * ToolBar设置
+     */
+    private void setToolBarListenner() {
         setSupportActionBar(toolbar);
-
         //使用toggle监听drawerlayout
         toggle = new ActionBarDrawerToggle(
                 this,
@@ -96,42 +142,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayShowTitleEnabled(false);//去掉标题
         //放在后面，取代响应侧滑的按钮
         //toolbar.setNavigationIcon(R.drawable.tab_home_black);
-
-        /**
-         * tablayout
-         */
-
-        fragmentViewPaferAdapter = new FragmentViewPagerAdapter(getSupportFragmentManager(), this);
-        viewPager.setAdapter(fragmentViewPaferAdapter);
-
-        tabLayout.setupWithViewPager(viewPager);//按理解，只要绑定了就会知道多少个tab
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        tabLayout.addOnTabSelectedListener(this);//监听，实时更换颜色
-        //为tab设置图标
-        setCustemTablayout(tabLayout);
-        TabLayout.Tab tab = tabLayout.getTabAt(0);
-        View v = tab.getCustomView();
-        ImageView image = (ImageView) v.findViewById(R.id.imageView);
-        image.setImageResource(tabimages_green[0]);
-
-        /**
-         * 侧滑栏组件设置点击事件
-         * 实现该功能需要在xml中取消headerLayout="@layout/nav_header
-         */
-        view = navigationView.inflateHeaderView(R.layout.nav_header);
-        navLoginBt = (Button) view.findViewById(R.id.nav_login_bt);
-        navUsername = (TextView) view.findViewById(R.id.nav_username);
-        navId = (TextView) view.findViewById(R.id.header_id);
-        //判断是否是游客登录
-        if(CommonVari.FAG==0)
-        {
-            navUsername.setVisibility(View.GONE);
-            navId.setVisibility(View.GONE);
-            navLoginBt.setOnClickListener(this);
-        }else {
-            navLoginBt.setVisibility(View.GONE);
-        }
-
     }
 
     /**

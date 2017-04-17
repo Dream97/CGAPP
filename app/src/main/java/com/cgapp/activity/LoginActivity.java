@@ -40,24 +40,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        id = (EditText) findViewById(R.id.login_id);
-        password = (EditText) findViewById(R.id.login_password);
-        loginBt = (Button) findViewById(R.id.login_bt);
-        registerBt = (Button) findViewById(R.id.register);
-        modifyBt = (Button) findViewById(R.id.login_modify_bt);
-        visitorBt = (Button) findViewById(R.id.visitor);
         initView();
 
     }
 
     private void initView()
     {
+        id = (EditText) findViewById(R.id.login_id);
+        password = (EditText) findViewById(R.id.login_password);
+        loginBt = (Button) findViewById(R.id.login_bt);
+        registerBt = (Button) findViewById(R.id.register);
+        modifyBt = (Button) findViewById(R.id.login_modify_bt);
+        visitorBt = (Button) findViewById(R.id.visitor);
         if(CommonVari.LOGINFAG == 0)
         {
             //读取上一次登录的账号密码
             id.setText(SharedPreferencesUtil.getData(this,"id"));
             password.setText(SharedPreferencesUtil.getData(this,"password"));
         }else{
+            //如果是从注册或者修改密码界面中过来的就读取Extra内容
             Intent intent = getIntent();
             id.setText(intent.getStringExtra(CommonVari.id));
             password.setText(intent.getStringExtra(CommonVari.password));

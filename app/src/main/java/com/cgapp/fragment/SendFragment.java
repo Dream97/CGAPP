@@ -42,9 +42,7 @@ public class SendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         view = inflater.inflate(R.layout.fragment_send,container,false);
-
         initView();
-
         //下拉刷新
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -56,8 +54,6 @@ public class SendFragment extends Fragment {
         });
         //设置adapter
         recyclerView.setAdapter(recyclerAdapter);
-
-
         return view;
     }
 

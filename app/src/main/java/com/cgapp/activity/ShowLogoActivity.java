@@ -33,19 +33,31 @@ import okhttp3.Response;
  * 初始页面加载界面
  */
 public class ShowLogoActivity extends Activity {
-
     //token验证api
     private String url = Api.url+"auth/logout";
-
     private ImageView imageView;
     private AlphaAnimation alphaAnimation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        initView();
+    }
 
-        //设置AlphaAnimation动画
+    /**
+     * 初始化View组件
+     */
+    private void initView() {
         imageView = (ImageView) findViewById(R.id.splashimage);
+        //设置AlphaAnimation动画
+        setAnimation();
+    }
+
+    /**
+     * 动画设置
+     */
+    private void setAnimation() {
         alphaAnimation = new AlphaAnimation(0.1f,1.0f);//透明度范围
         imageView.setAnimation(alphaAnimation);//为组件绑定动画
         alphaAnimation.setDuration(2000);//时间
@@ -106,10 +118,7 @@ public class ShowLogoActivity extends Activity {
 
             }
         });
-
     }
-
-
 }
 
 

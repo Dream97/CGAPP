@@ -25,30 +25,38 @@ public class UserDataActivity extends AppCompatActivity implements View.OnClickL
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userdata);
-        toolbar = (Toolbar) findViewById(R.id.userdata_tool);
-        tabLayout = (TabLayout) findViewById(R.id.userdata_tab);
-        viewPager = (ViewPager) findViewById(R.id.userdata_viewpage);
         initView();
     }
 
     private void initView() {
-        /**
-         * toolBar设置
-         */
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);//去掉标题
-        //放在后面，取代响应侧滑的按钮
-        toolbar.setNavigationIcon(R.drawable.backicon);
+        toolbar = (Toolbar) findViewById(R.id.userdata_tool);
+        tabLayout = (TabLayout) findViewById(R.id.userdata_tab);
+        viewPager = (ViewPager) findViewById(R.id.userdata_viewpage);
+        //toolBar设置
+        setToolBar();
+        //viewpage与tab设置
+        setTabWithViewPager();
+    }
 
-        /**
-         * viewpage与tab设置
-         */
+    /**
+     * ViewPager与Tab设置
+     */
+    private void setTabWithViewPager() {
         UserViewPagerAdapter userViewPagerAdapter = new UserViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(userViewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);//模式
         tabLayout.setOnTabSelectedListener(this);
+    }
 
+    /**
+     * ToolBar设置
+     */
+    private void setToolBar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);//去掉标题
+        //放在后面，取代响应侧滑的按钮
+        toolbar.setNavigationIcon(R.drawable.backicon);
 
     }
 
