@@ -26,7 +26,7 @@ import okhttp3.Call;
 import okhttp3.Response;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
-
+//接风是傻逼
     String TAG = "LoginActivity";
     private Button visitorBt;
     private EditText id;

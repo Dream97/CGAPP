@@ -7,6 +7,7 @@
         android:color="#e2e2e2" >
     </solid>
 
+    <!--圆角的半径-->
     <corners
         android:radius="3dp">
     </corners>
