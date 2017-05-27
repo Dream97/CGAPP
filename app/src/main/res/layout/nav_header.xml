@@ -5,13 +5,12 @@
     android:background="@color/colorPrimary"
     android:orientation="horizontal">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:id="@+id/user_image"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="30dp"
-        android:scaleType="fitXY"
         android:src="@drawable/myimage"
         android:background="@color/colorPrimary"
         />
