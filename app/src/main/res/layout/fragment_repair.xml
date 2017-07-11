@@ -108,6 +108,7 @@
                     android:layout_marginTop="5dp"
                     android:text="照片"
                     android:textSize="17sp"/>
+                <!--
                 <ImageButton
                     android:id="@+id/push_picture"
                     android:layout_width="60dp"
@@ -115,7 +116,17 @@
                     android:layout_marginLeft="7dp"
                     android:src="@drawable/plus"
                     android:scaleType="fitXY"
-                    />
+                    />-->
+
+
+                <GridView
+                    android:id="@+id/gvImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:horizontalSpacing="5dp"
+                    android:numColumns="3"
+                    android:verticalSpacing="5dp" />
             </LinearLayout>
             <Button
                 android:id="@+id/repair_Bt"

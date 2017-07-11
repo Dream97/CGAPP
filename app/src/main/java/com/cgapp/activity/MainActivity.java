@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.cgapp.R;
 import com.cgapp.Util.CommonVari;
 import com.cgapp.adapter.FragmentViewPagerAdapter;
+import com.cgapp.fragment.RepairFragment;
 
 /**
  * Created by asus on 2017/3/24.
@@ -250,4 +252,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
     }
+
+    /**
+     *  相册选择照片回调
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent)
+    {
+        super.onActivityResult(requestCode,resultCode,intent);
+        Fragment fragment = RepairFragment.getInstance();
+        fragment.onActivityResult(requestCode,resultCode,intent);
+    }
+
 }

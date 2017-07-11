@@ -10,6 +10,6 @@ public class Api {
     public static final String GUOKR_ARTICLES = "http://apis.guokr.com/handpick/article.json?retrieve_type=by_since&category=all&limit=25&ad=1";
 
     //主接口
-    public static final String url = "http://120.77.16.36/api/";
+    public static final String url = "http://119.29.179.91/api/";
 
 }
