@@ -92,7 +92,7 @@ public class ShowLogoActivity extends Activity {
                         try {
                             int status = JsonUtil.getIntCode(responseBody);
                             //Log.d(TAG, "onResponse: 状态是"+status);
-                            if(status==1)
+                            if(status == 1)
                             {
                                 runOnUiThread(new Runnable() {
                                     @Override

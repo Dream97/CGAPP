@@ -39,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText registerPassword;
     private EditText registerPassword2;
     private EditText registerVc;
-    private Button registerVcBt;
+    //private Button registerVcBt;
     private Button registerBt;
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -48,7 +48,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_register);
         toolbar = (Toolbar) findViewById(R.id.re_toolBar);
         registerId = (EditText) findViewById(R.id.register_id);
-        registerVcBt = (Button) findViewById(R.id.register_getvc_bt);
+       // registerVcBt = (Button) findViewById(R.id.register_getvc_bt);
         registerName = (EditText) findViewById(R.id.register_name);
         registerPassword = (EditText) findViewById(R.id.register_pass);
         registerPassword2 = (EditText) findViewById(R.id.register_pass2);
@@ -73,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         /**
          * 按钮监听
          */
-        registerVcBt.setOnClickListener(this);
+       // registerVcBt.setOnClickListener(this);
         registerBt.setOnClickListener(this);
     }
 
@@ -82,9 +82,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId())
         {
-            case R.id.register_getvc_bt:
-                getVC();
-                break;
+//            case R.id.register_getvc_bt:
+//                getVC();
+//                break;
             case R.id.register_bt:
                 register();
 
@@ -96,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      * 处理注册按钮事件
      */
     private void register() {
-        String url1 = Api.url+"auth/register";
+        String url1 = Api.register;
         String name = registerName.getText().toString().trim();
         String phone = registerId.getText().toString().trim();
         String password = registerPassword.getText().toString().trim();
@@ -114,7 +114,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             map.put("phone",phone);
             map.put("name",name);
             map.put("password",password);
-            map.put("code",code);
+            map.put("email",code);
             OkHttpUtil.post(url1, new okhttp3.Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
@@ -122,23 +122,32 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 }
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    String responseData = response.body().string();
+                    final String responseData = response.body().string();
                     try {
+                        Log.d(TAG, "onResponse: "+"注册接口");
                         final int status = JsonUtil.getIntCode(responseData);
-                        if(status==1)
+                        if(status == 1 )
                         {
+                            Log.d(TAG, "onResponse: "+"状态1");
                             Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
-                            intent.putExtra(CommonVari.id,registerId.getText().toString());
+                            intent.putExtra(CommonVari.id,registerVc.getText().toString());
                             intent.putExtra(CommonVari.password,registerPassword.getText().toString());
                             startActivity(intent);
                             finish();
+                        }else{
+                            Log.d(TAG, "onResponse: "+"状态0");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        new ToastUtil(RegisterActivity.this,JsonUtil.getData(responseData));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                         }
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                new ToastUtil(RegisterActivity.this,status);
-                            }
-                        });
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -173,7 +182,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (status==1)
+                                if (status == 1)
                                 {
                                     new ToastUtil(RegisterActivity.this,CommonVari.VCSUCCESS);
                                 }else {

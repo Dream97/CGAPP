@@ -1,5 +1,7 @@
 package com.cgapp.Util;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,12 +13,10 @@ public class JsonUtil {
     public  static int getIntCode(String response) throws JSONException {
         JSONObject jsonObject = new JSONObject(response);
         int status = jsonObject.getInt("status");
-        if(jsonObject.has("errcode"))
-        {
-            return jsonObject.getInt("errcode");
-        }
         return status;
     }
+
+
     public static String getToken(String response) throws JSONException {
         JSONObject jsonObject = new JSONObject(response);
         if (jsonObject.has("errcode"))
@@ -30,4 +30,16 @@ public class JsonUtil {
         }
     }
 
+
+    public static String getData(String response) throws JSONException {
+        JSONObject jsonObject = new JSONObject(response);
+        Log.d("获取错误信息", "getData: ");
+        if (jsonObject.has("errmsg"))
+        {
+            JSONObject data = jsonObject.getJSONObject("errmsg");
+            String content = data.getString("content");
+            return content;
+        }
+        return "";
+    }
 }

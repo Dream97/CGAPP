@@ -101,16 +101,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
      * 处理登录事件
      */
     private void login() {
-        String url = Api.url+"auth/login";
+        String url = Api.login;
         Map<String,String> map = new HashMap<>();
-        if(id.getText().toString().length()!=11)
+        if(id.getText().toString().length()<=8)
         {
             new ToastUtil(LoginActivity.this, CommonVari.IDNULL);
         }else if(password.getText().toString().length()<6){
             new ToastUtil(LoginActivity.this,CommonVari.LIT);
         }
         else{
-            map.put("phone",id.getText().toString());
+            map.put("email",id.getText().toString());
             map.put("password",password.getText().toString());
 
             OkHttpUtil.post(url, new okhttp3.Callback() {
@@ -120,30 +120,54 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    String responseBody = response.body().string();
+                    final String responseBody = response.body().string();
                     try {
-                        final String token = JsonUtil.getToken(responseBody);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if(token!=null)
-                                {
-                                    CommonVari.token = token;
-                                    Intent intent1 = new Intent(LoginActivity.this,MainActivity.class);
-                                    startActivity(intent1);
-                                    Log.d(TAG, "run: toekn令牌"+token);
-                                    SharedPreferencesUtil.pustData(LoginActivity.this,id.getText().toString(),password.getText().toString(),token);
-                                    CommonVari.FAG = 1;
-                                    finish();
-                                }else{
-                                    new ToastUtil(LoginActivity.this,0);
-                                }
-                            }
-                        });
+                        int status = JsonUtil.getIntCode(responseBody);
+                        if(status == 1){
+                            try {
+                                final String token = JsonUtil.getToken(responseBody);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if(token!=null)
+                                        {
+                                            CommonVari.token = token;
+                                            Intent intent1 = new Intent(LoginActivity.this,MainActivity.class);
+                                            startActivity(intent1);
+                                            Log.d(TAG, "run: toekn令牌"+token);
+                                            SharedPreferencesUtil.pustData(LoginActivity.this,id.getText().toString(),password.getText().toString(),token);
+                                            CommonVari.FAG = 1;
+                                            finish();
+                                        }else{
+                                            runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    new ToastUtil(LoginActivity.this,0);
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
 
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }else{
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        new ToastUtil(LoginActivity.this,JsonUtil.getData(responseBody));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }}
+                            );
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                 }
             },map);
         }

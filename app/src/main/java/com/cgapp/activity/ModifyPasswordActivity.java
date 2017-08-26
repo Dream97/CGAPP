@@ -167,7 +167,7 @@ public class ModifyPasswordActivity extends AppCompatActivity implements View.On
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (status==1)
+                                if (status == 1)
                                 {
                                     new ToastUtil(ModifyPasswordActivity.this,CommonVari.VCSUCCESS);
                                 }else {

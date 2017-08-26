@@ -18,6 +18,12 @@ public class ToastUtil {
         initMsg();
         showToast();
     }
+    public ToastUtil(Context context, String msg)
+    {
+        this.context = context;
+        this.msg = msg;
+        showToast();
+    }
 
     private void initMsg() {
         switch (code)
