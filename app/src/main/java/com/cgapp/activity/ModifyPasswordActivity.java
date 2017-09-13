@@ -91,7 +91,7 @@ public class ModifyPasswordActivity extends AppCompatActivity implements View.On
      * 处理修改密码按钮事件
      */
     private void modify() {
-        String url1 = Api.url+"auth/updatePassword";
+        String url1 = Api.forget;
         String phone = id.getText().toString();
         final String password = pass.getText().toString();
         String password2 = pass2.getText().toString();
@@ -105,8 +105,8 @@ public class ModifyPasswordActivity extends AppCompatActivity implements View.On
             new ToastUtil(ModifyPasswordActivity.this, CommonVari.DIF);
         }else{
             Map<String,String> map =  new HashMap<>();
-            map.put("phone",phone);
-            map.put("password",password);
+            map.put("email",phone);
+            map.put("newPass",password);
             map.put("code",code);
             OkHttpUtil.post(url1, new okhttp3.Callback() {
                 @Override
@@ -115,7 +115,7 @@ public class ModifyPasswordActivity extends AppCompatActivity implements View.On
                 }
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    String responseData = response.body().string();
+                    final String responseData = response.body().string();
                     try {
                         final int status = JsonUtil.getIntCode(responseData);
                         runOnUiThread(new Runnable() {
@@ -129,7 +129,13 @@ public class ModifyPasswordActivity extends AppCompatActivity implements View.On
                                 startActivity(intent);
                                 finish();
                             }else{
-                                    new ToastUtil(ModifyPasswordActivity.this,status);
+                                    Log.d(TAG, "run:"+"status是"+status);
+
+                                    try {
+                                        new ToastUtil(ModifyPasswordActivity.this,JsonUtil.getData(responseData));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
                             }
                         });
@@ -145,10 +151,10 @@ public class ModifyPasswordActivity extends AppCompatActivity implements View.On
      * 处理获取验证码事件
      */
     private void getVC() {
-        String url = Api.url+"auth/getVerificationCode";
-        String key = "phone";
+        String url = Api.getCode;
+        String key = "email";
         String value = id.getText().toString().trim();
-        if (value.length()!=11)
+        if (value.length()<=5)
         {
             new ToastUtil(ModifyPasswordActivity.this, CommonVari.IDNULL);
         }else{

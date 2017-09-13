@@ -16,6 +16,12 @@ public class Api {
     public static final String register = url+"user/register";
     //登录
     public static final String login = url+"user/login";
+    //忘记密码
+    public static final String forget = url+"user/forget";
+    //获取验证码
+    public static final String getCode = url+"user/getCode";
+
+
 
 
 
