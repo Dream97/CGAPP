@@ -14,8 +14,6 @@ public class OkHttpUtil {
 
     public static void post(String address, okhttp3.Callback callback, Map<String,String> map)
     {
-
-
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder builder = new FormBody.Builder();
         if (map!=null)
@@ -29,6 +27,20 @@ public class OkHttpUtil {
         Request request = new Request.Builder()
                 .url(address)
                 .post(body)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+
+    public static void get(String address, okhttp3.Callback callback,Map<String,String> map)
+    {
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder builder = new FormBody.Builder();
+        FormBody body = builder.build();
+ //        String token = map.get("token");
+        Request request = new Request.Builder()
+                .url(address)
+                .addHeader("Authorization","Bearer "+map.get("token"))
                 .build();
         client.newCall(request).enqueue(callback);
     }

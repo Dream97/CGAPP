@@ -8,6 +8,7 @@ package com.cgapp.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
@@ -27,6 +28,8 @@ import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Response;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by D&LL on 2016/5/25.
@@ -78,12 +81,13 @@ public class ShowLogoActivity extends Activity {
             public void onAnimationEnd(Animation animation) {
 
                 CommonVari.token = SharedPreferencesUtil.getData(ShowLogoActivity.this,"token");
+                Log.d(TAG, "onAnimationEnd: token是是是是是是是"+CommonVari.token);
                 Map<String,String> map = new HashMap<String, String>();
                 map.put("token",CommonVari.token);
-                OkHttpUtil.post(url, new okhttp3.Callback() {
+                OkHttpUtil.get(Api.getInfo, new okhttp3.Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-
+                        Log.d(TAG, "onResponse: 状态是失败");
                     }
 
                     @Override
@@ -91,7 +95,7 @@ public class ShowLogoActivity extends Activity {
                         String responseBody = response.body().string();
                         try {
                             int status = JsonUtil.getIntCode(responseBody);
-                            //Log.d(TAG, "onResponse: 状态是"+status);
+                            Log.d(TAG, "onResponse: 状态是"+responseBody);
                             if(status == 1)
                             {
                                 runOnUiThread(new Runnable() {
@@ -104,14 +108,18 @@ public class ShowLogoActivity extends Activity {
                                 });
 
                             }
+                            else{
+                                Intent intent = new Intent(ShowLogoActivity.this,LoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 },map);
-                Intent intent = new Intent(ShowLogoActivity.this,LoginActivity.class);
-                startActivity(intent);
-                finish();
+                //finish();
+
             }
             @Override
             public void onAnimationRepeat(Animation animation) {

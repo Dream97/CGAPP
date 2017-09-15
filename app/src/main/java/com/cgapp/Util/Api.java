@@ -20,7 +20,8 @@ public class Api {
     public static final String forget = url+"user/forget";
     //获取验证码
     public static final String getCode = url+"user/getCode";
-
+    //获取用户信息
+    public static final String getInfo = url+"user/getInfo";
 
 
 
