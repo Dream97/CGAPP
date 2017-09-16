@@ -124,11 +124,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     try {
                         int status = JsonUtil.getIntCode(responseBody);
                         if(status == 1){
+                            JsonUtil.getInfo(responseBody);
                             try {
                                 final String token = JsonUtil.getToken(responseBody);
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+//                                        if(UserBean.identity.equals("0")){
+//                                            new ToastUtil(LoginActivity.this,"请输入普通用户账号");
+//                                        } else
                                         if(token!=null)
                                         {
                                             CommonVari.token = token;
@@ -148,7 +152,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         }
                                     }
                                 });
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -167,7 +170,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
             },map);
         }

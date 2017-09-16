@@ -21,7 +21,10 @@ import android.widget.Toast;
 import com.cgapp.R;
 import com.cgapp.Util.CommonVari;
 import com.cgapp.adapter.FragmentViewPagerAdapter;
+import com.cgapp.bean.UserBean;
 import com.cgapp.fragment.RepairFragment;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by asus on 2017/3/24.
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Button navLoginBt;//侧滑栏登录按钮
     private TextView navUsername;
     private TextView navId;
+    CircleImageView imageView;
 
 
     @Override
@@ -95,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navLoginBt = (Button) view.findViewById(R.id.nav_login_bt);
         navUsername = (TextView) view.findViewById(R.id.nav_username);
         navId = (TextView) view.findViewById(R.id.header_id);
+        imageView = (CircleImageView) view.findViewById(R.id.user_image);
         //判断是否是游客登录
         if(CommonVari.FAG==0)
         {
@@ -103,6 +108,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navLoginBt.setOnClickListener(this);
         }else {
             navLoginBt.setVisibility(View.GONE);
+            navUsername.setText(UserBean.name);
+            navUsername.setOnClickListener(this);
+            navId.setText(UserBean.email);
+            navId.setOnClickListener(this);
+            imageView.setOnClickListener(this);
         }
     }
 
@@ -168,11 +178,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(item.getItemId())
         {
             case R.id.menu_data:
-                Intent intent = new Intent(MainActivity.this,UserDataActivity.class);
+                Intent intent = new Intent(MainActivity.this,UserActivity.class);
                 startActivity(intent);
                 break;
             case R.id.menu_history:
-                Intent intent1 = new Intent(MainActivity.this,RepairHistoryActivity.class);
+                Intent intent1 = new Intent(MainActivity.this,HistoryActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.menu_favorite:
@@ -249,6 +259,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(intent);
                 finish();
+                break;
+            case R.id.nav_username:
+                Intent intent1 = new Intent(MainActivity.this,UserActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.user_image:
+                Intent intent2 = new Intent(MainActivity.this,UserActivity.class);
+                startActivity(intent2);
+                break;
+            case R.id.header_id:
+                Intent intent3 = new Intent(MainActivity.this,UserActivity.class);
+                startActivity(intent3);
                 break;
         }
     }
