@@ -22,6 +22,8 @@ public class Api {
     public static final String getCode = url+"user/getCode";
     //获取用户信息
     public static final String getInfo = url+"user/getInfo";
+    //登出
+    public static final String logout = url+"user/logout";
 
 
 

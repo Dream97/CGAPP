@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.cgapp.R;
 import com.cgapp.Util.CommonVari;
+import com.cgapp.Util.ToastUtil;
 import com.cgapp.adapter.FragmentViewPagerAdapter;
 import com.cgapp.bean.UserBean;
 import com.cgapp.fragment.RepairFragment;
@@ -178,8 +179,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(item.getItemId())
         {
             case R.id.menu_data:
+                if(CommonVari.FAG==1){
                 Intent intent = new Intent(MainActivity.this,UserActivity.class);
-                startActivity(intent);
+                startActivity(intent);}else{
+                    new ToastUtil(this,"请先登录");
+                }
                 break;
             case R.id.menu_history:
                 Intent intent1 = new Intent(MainActivity.this,HistoryActivity.class);
