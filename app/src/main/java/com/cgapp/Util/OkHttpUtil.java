@@ -11,7 +11,6 @@ import okhttp3.Request;
  */
 
 public class OkHttpUtil {
-
     public static void post(String address, okhttp3.Callback callback, Map<String,String> map)
     {
         OkHttpClient client = new OkHttpClient();
@@ -31,6 +30,26 @@ public class OkHttpUtil {
         client.newCall(request).enqueue(callback);
     }
 
+    //post请求带头字段
+    public static void post2(String address, okhttp3.Callback callback, Map<String,String> map)
+    {
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder builder = new FormBody.Builder();
+        if (map!=null)
+        {
+            for (Map.Entry<String,String> entry:map.entrySet())
+            {
+                builder.add(entry.getKey(),entry.getValue());
+            }
+        }
+        FormBody body = builder.build();
+        Request request = new Request.Builder()
+                .url(address)
+                .post(body)
+                .addHeader("Authorization","Bearer "+CommonVari.token)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
 
     public static void logout(String address, okhttp3.Callback callback, Map<String,String> map)
     {

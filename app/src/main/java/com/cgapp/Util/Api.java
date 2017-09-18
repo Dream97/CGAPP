@@ -24,6 +24,8 @@ public class Api {
     public static final String getInfo = url+"user/getInfo";
     //登出
     public static final String logout = url+"user/logout";
+    //修改
+    public static final String modify = url +"user/modify";
 
 
 
